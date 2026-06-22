@@ -51,7 +51,6 @@ AGENTMESH_RECURSION_LIMIT=12
 AGENTMESH_ENABLE_SQLITE_CHECKPOINTS=false
 ```
 
-Do not commit `.env`. It is ignored by `.gitignore`.
 
 ## Dry Run
 
