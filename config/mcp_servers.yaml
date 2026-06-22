@@ -1,0 +1,29 @@
+servers:
+  web_search_server:
+    transport: stdio
+    command: python
+    args: ["-m", "agentmesh.mcp_servers.web_search_server"]
+
+  weather_server:
+    transport: stdio
+    command: python
+    args: ["-m", "agentmesh.mcp_servers.weather_server"]
+
+  filesystem_server:
+    transport: stdio
+    command: python
+    args: ["-m", "agentmesh.mcp_servers.filesystem_server"]
+    env:
+      AGENTMESH_WORKSPACE_ROOT: "."
+
+  python_exec_server:
+    transport: stdio
+    command: python
+    args: ["-m", "agentmesh.mcp_servers.python_exec_server"]
+
+  memory_server:
+    transport: stdio
+    command: python
+    args: ["-m", "agentmesh.mcp_servers.memory_server"]
+    env:
+      AGENTMESH_DATA_DIR: ".agentmesh_data"

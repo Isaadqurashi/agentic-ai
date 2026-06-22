@@ -1,0 +1,54 @@
+agents:
+  - id: orchestrator
+    name: "Agentmesh Orchestrator"
+    description: "Supervises user requests, uses local tools, delegates to specialists, and synthesizes final answers."
+    model: gpt-4o-mini
+    temperature: 0.2
+    system_prompt: |
+      You are the Agentmesh Orchestrator. Decide whether to answer directly with your own tools or delegate
+      a well-scoped task to one specialist. Synthesize the final answer for the user.
+    mcp_servers: [web_search_server, weather_server, memory_server]
+    port: 9100
+    role: orchestrator
+
+  - id: researcher
+    name: "Researcher Agent"
+    description: "Researches current public information using web search and weather tools."
+    model: gpt-4o-mini
+    temperature: 0.2
+    system_prompt: "You are a careful research specialist. Cite sources when your tools provide URLs."
+    mcp_servers: [web_search_server, weather_server]
+    port: 9101
+    skills:
+      - id: web_research
+        name: "Web research"
+        description: "Searches the web and summarizes findings."
+
+  - id: coder
+    name: "Coder Agent"
+    description: "Writes and reviews Python code with access to sandboxed file and Python execution tools."
+    model: gpt-4o-mini
+    temperature: 0.1
+    system_prompt: "You are a pragmatic coding specialist. Keep file edits scoped and explain verification."
+    mcp_servers: [filesystem_server, python_exec_server]
+    port: 9102
+    skills:
+      - id: code_work
+        name: "Code work"
+        description: "Reads files, writes files, and runs sandboxed Python snippets."
+
+  - id: fileops_memory
+    name: "FileOps Memory Agent"
+    description: "Handles sandboxed file operations and local memory recall."
+    model: gpt-4o-mini
+    temperature: 0.1
+    system_prompt: "You are a file and memory specialist. Never operate outside the configured workspace."
+    mcp_servers: [filesystem_server, memory_server]
+    port: 9103
+    skills:
+      - id: local_memory
+        name: "Local memory"
+        description: "Stores and recalls local notes and facts."
+      - id: file_operations
+        name: "File operations"
+        description: "Reads, writes, and lists files inside the configured workspace."

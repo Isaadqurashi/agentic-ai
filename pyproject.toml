@@ -1,0 +1,49 @@
+[project]
+name = "agentmesh"
+version = "0.1.0"
+description = "Custom extensible multi-agent system using OpenAI, LangGraph, MCP, and A2A."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "langgraph",
+    "langchain",
+    "langchain-core",
+    "langchain-openai",
+    "openai",
+    "mcp>=1.27,<2",
+    "langchain-mcp-adapters",
+    "a2a-sdk",
+    "langgraph-checkpoint-sqlite",
+    "aiosqlite",
+    "fastapi",
+    "uvicorn",
+    "starlette",
+    "httpx",
+    "ddgs",
+    "chromadb",
+    "sentence-transformers",
+    "pyyaml",
+    "rich",
+]
+
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-asyncio",
+]
+trace = [
+    "langsmith",
+]
+
+[project.scripts]
+agentmesh-cli = "agentmesh.interfaces.cli:main"
+agentmesh-agent = "agentmesh.run_agent:main"
+agentmesh-web = "agentmesh.interfaces.web.server:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
