@@ -45,13 +45,28 @@
       }
       #log {
         min-height: 55vh;
+        max-height: calc(100vh - 180px);
         padding: 18px;
         background: var(--panel);
         border: 1px solid var(--border);
         border-radius: 8px;
         overflow-y: auto;
-        white-space: pre-wrap;
         line-height: 1.5;
+      }
+      .message {
+        white-space: pre-wrap;
+        overflow-wrap: anywhere;
+      }
+      .message + .message {
+        margin-top: 14px;
+      }
+      .message-label {
+        color: var(--muted);
+        font-size: 13px;
+        font-weight: 600;
+      }
+      .message-content {
+        margin-top: 2px;
       }
       form {
         display: grid;
@@ -97,19 +112,55 @@
       const form = document.querySelector("#chat-form");
       const input = document.querySelector("#message");
       const log = document.querySelector("#log");
+
+      function appendMessage(label, text) {
+        const message = document.createElement("div");
+        message.className = "message";
+
+        const messageLabel = document.createElement("div");
+        messageLabel.className = "message-label";
+        messageLabel.textContent = label;
+
+        const content = document.createElement("div");
+        content.className = "message-content";
+        content.textContent = text;
+
+        message.append(messageLabel, content);
+        log.appendChild(message);
+        log.scrollTop = log.scrollHeight;
+      }
+
       form.addEventListener("submit", (event) => {
         event.preventDefault();
         const text = input.value.trim();
         if (!text) return;
         input.value = "";
-        log.textContent += `you: ${text}\n`;
+        appendMessage("you", text);
         const source = new EventSource(`/chat?q=${encodeURIComponent(text)}`);
         source.onmessage = (message) => {
-          log.textContent += `agentmesh: ${message.data}\n\n`;
+          let response;
+          try {
+            response = JSON.parse(message.data);
+          } catch {
+            response = message.data;
+          }
+          appendMessage("agentmesh", response);
           source.close();
         };
+        source.addEventListener("agent-error", (message) => {
+          let error;
+          try {
+            error = JSON.parse(message.data);
+          } catch {
+            error = message.data;
+          }
+          appendMessage("agentmesh", `Request failed: ${error}`);
+          source.close();
+        });
         source.onerror = () => {
-          log.textContent += "agentmesh: request failed\n\n";
+          if (source.readyState !== EventSource.CLOSED) {
+            appendMessage("agentmesh", "Request failed.");
+          }
           source.close();
         };
       });
