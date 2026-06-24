@@ -15,7 +15,7 @@ agents:
     name: "Researcher Agent"
     description: "Researches current public information using web search and weather tools."
     model: gpt-4o-mini
-    temperature: 0.2
+    temperature: 0.2 
     system_prompt: "You are a careful research specialist. Cite sources when your tools provide URLs."
     mcp_servers: [web_search_server, weather_server]
     port: 9101

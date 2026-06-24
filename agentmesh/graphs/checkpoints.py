@@ -8,7 +8,7 @@ from typing import Any
 _OPEN_CHECKPOINTERS: list[Any] = []
 _OPEN_ASYNC_CHECKPOINTERS: list[Any] = []
 
-
+ 
 def checkpoint_path(agent_id: str) -> Path:
     data_dir = Path(os.getenv("AGENTMESH_DATA_DIR", ".agentmesh_data")).resolve()
     data_dir.mkdir(parents=True, exist_ok=True)

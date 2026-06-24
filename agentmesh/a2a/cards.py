@@ -5,7 +5,7 @@ import hmac
 import json
 import os
 from typing import Any
-
+ 
 
 def sign_card(card: dict[str, Any]) -> str:
     secret = os.getenv("AGENTMESH_CARD_SIGNING_SECRET", "agentmesh-dev-signing-key")

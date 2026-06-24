@@ -16,7 +16,7 @@ async def _build_app(agent_id: str):
     graph = await build_orchestrator_graph() if agent_id == "orchestrator" else await build_agent_graph(agent_id)
     checkpointer = getattr(graph, "checkpointer", None)
     print(f"agentmesh graph ready: {agent_id} checkpointer={type(checkpointer).__module__}.{type(checkpointer).__name__}", flush=True)
-    return build_a2a_app(graph, cfg)
+    return build_a2a_app(graph, cfg) 
 
 
 def main() -> None:

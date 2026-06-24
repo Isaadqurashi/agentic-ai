@@ -15,7 +15,7 @@ async def build_orchestrator_graph(agent_cards: dict[str, dict[str, Any]] | None
     own_tools = await _load_mcp_tools(cfg)
     cards = agent_cards if agent_cards is not None else await discover_specialist_cards()
     delegate_tools = [build_delegate_tool(agent_id, card) for agent_id, card in cards.items()]
-    tools = own_tools + delegate_tools
+    tools = own_tools + delegate_tools 
     model = get_chat_model(cfg)
 
     try:
@@ -34,7 +34,7 @@ async def build_orchestrator_graph(agent_cards: dict[str, dict[str, Any]] | None
 
     graph = StateGraph(MessagesState)
     graph.add_node("assistant", assistant)
-    graph.add_node("tools", ToolNode(tools))
+    graph.add_node("tools", ToolNode(tools)) 
     graph.set_entry_point("assistant")
     graph.add_conditional_edges("assistant", tools_condition, {"tools": "tools", END: END})
     graph.add_edge("tools", "assistant")

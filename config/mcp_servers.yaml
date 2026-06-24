@@ -26,4 +26,4 @@ servers:
     command: python
     args: ["-m", "agentmesh.mcp_servers.memory_server"]
     env:
-      AGENTMESH_DATA_DIR: ".agentmesh_data"
+      AGENTMESH_DATA_DIR: ".agentmesh_data" 

@@ -12,7 +12,7 @@ from agentmesh.utils.config_loader import get_agent_config, mcp_client_config_fo
 class DryRunCompiledGraph:
     def __init__(self, agent_id: str, cfg: dict[str, Any]) -> None:
         self.agent_id = agent_id
-        self.cfg = cfg
+        self.cfg = cfg 
 
     async def ainvoke(self, state: dict[str, Any], config: dict[str, Any] | None = None) -> dict[str, Any]:
         content = _last_message_content(state.get("messages", []))

@@ -11,7 +11,7 @@ from agentmesh.utils.cost_tracker import get_tracker
 
 def build_a2a_app(graph: Any, agent_cfg: dict[str, Any]) -> Any:
     from fastapi import Body, FastAPI
-
+ 
     card = build_agent_card(agent_cfg)
     executor = GraphAgentExecutor(graph)
     app = FastAPI(title=card["name"])
